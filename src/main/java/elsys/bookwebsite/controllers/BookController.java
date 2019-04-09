@@ -4,16 +4,17 @@ import elsys.bookwebsite.bookBindingModel.BookBindingModel;
 import elsys.bookwebsite.entity.Book;
 import elsys.bookwebsite.repository.BookRepository;
 import elsys.bookwebsite.repository.UserRepository;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -69,16 +70,23 @@ public class BookController {
     }
 
     @PostMapping("/create")
-    public String create(Book book, @RequestParam("file") MultipartFile file) throws IOException {
+    public String create(Book book,@RequestParam("uploadingFiles") MultipartFile[] uploadingFiles) throws IOException {
 
         Book t = new Book();
         t.setId(book.getId());
         t.setName(book.getName());
         t.setDescription(book.getDescription());
-        byte[] bytes = file.getBytes();
-        Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-        Files.write(path, bytes);
-        t.setImage(file.getOriginalFilename());
+        for(MultipartFile uploadedFile : uploadingFiles) {
+            byte[] bytes = uploadedFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + uploadedFile.getOriginalFilename());
+            Files.write(path, bytes);
+            if(uploadedFile.getOriginalFilename().contains(".png") || uploadedFile.getOriginalFilename().contains(".jpg")){
+                t.setImage(uploadedFile.getOriginalFilename());
+            }
+            else{
+                t.setF(uploadedFile.getOriginalFilename());
+            }
+        }
         this.bookRepository.save(t);
         return "redirect:/";
     }
@@ -156,8 +164,19 @@ public class BookController {
         return new ModelAndView("redirect:/");
     }
     @GetMapping("/download/{id}")
-    public FileSystemResource downloadFile(@PathVariable Long id) {
+    public ResponseEntity<InputStreamResource> downloadFile(@PathVariable Long id) throws IOException {
         Book book = this.bookRepository.findById(Math.toIntExact(id)).get();
-        return new FileSystemResource(new File(book.getF()));
+        File file = new File(UPLOADED_FOLDER + "/" + book.getF());
+        InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + file.getName())
+                .contentType(MediaType.TEXT_PLAIN)
+                .contentLength(file.length()) //
+                .body(resource);
+    }
+    @PostMapping("/download/{id}")
+    public ModelAndView editFile(){
+        return new ModelAndView("redirect:/");
     }
 }

@@ -1,0 +1,11 @@
+<h1 xmlns:th="http://www.w3.org/1999/xhtml">Delete Book</h1>
+<section>
+    <div xmlns:th="http://www.w3.org/1999/xhtml">
+        <form th:action="@{/delete/{id}(id=${book.id})}" method="POST">
+            <label for="name">Name</label>
+            <input type="text" id="name" th:value="${book.name}" name="name" disabled/>
+            <button class="button" type="submit">Delete</button>
+            <button class="button cancel" type="button" onclick="location.href='/'">Cancel</button>
+        </form>
+    </div>
+</section>

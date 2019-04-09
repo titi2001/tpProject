@@ -1,0 +1,13 @@
+
+<h1>Edit File</h1>
+<section xmlns:th="http://www.w3.org/1999/xhtml">
+    <div>
+        <form th:action="@{/edit/{id}(id=${book.id})}" method="POST" enctype="multipart/form-data">
+            <input type="text" id="name" th:value="${book.name}" name="name" disabled/>
+            <input type="text" id = "description" name = "description" disabled/>
+            <input type="file" name="file" />
+            <button class="button" type="submit">Edit</button>
+            <button class="cancel button" type="button" onclick="location.href='/'">Cancel</button>
+        </form>
+    </div>
+</section>

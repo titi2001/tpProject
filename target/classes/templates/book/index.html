@@ -1,0 +1,16 @@
+<ul class="navba">
+    <a href="#t1"><li class="icon fa fa-bolt"></li></a>
+    <a href="#t2"><li class="icon fas fa-bookmark"></li></a>
+    <a href="#t3"><li class="icon fas fa-video"></li></a>
+    <a href="#t4"><li class="icon fas fa-music"></li></a>
+</ul>
+<section xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container" th:each="book : ${books}">
+        <div class="row">
+            <a th:href="${'/view/' + book.id}"><div class="col-md-auto">
+                <img th:src = "${book.image}" class = "bookImage">
+                <p th:text="${book.name}"></p>
+            </div></a>
+        </div>
+    </div>
+</section>

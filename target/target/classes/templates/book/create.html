@@ -1,0 +1,14 @@
+<h1>Create Book</h1>
+<section>
+    <div xmlns:th="http://www.w3.org/1999/xhtml">
+        <form th:action="@{/create}" method="POST" enctype="multipart/form-data">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required/>
+            <input type="text" id = "description" name = "description" required/>
+            <p>Image and File:</p>
+            <input type="file" name="uploadingFiles" multiple /><br/><br/>
+            <button class="button" type="submit">Create</button>
+            <button class="button cancel" type="button" onclick="location.href='/'">Cancel</button>
+        </form>
+    </div>
+</section>

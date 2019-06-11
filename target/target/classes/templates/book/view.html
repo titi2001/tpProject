@@ -1,7 +1,0 @@
-<section xmlns:th="http://www.w3.org/1999/xhtml">
-    <center>
-        <h1 th:text="${book.name}"></h1>
-        <p th:text="${book.description}"></p>
-        <button th:onclick="'location.href = \'' + @{/download/{id}(id=${book.id})} + '\''">Download</button>
-    </center>
-</section>

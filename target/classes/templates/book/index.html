@@ -5,12 +5,20 @@
     <a href="#t4"><li class="icon fas fa-music"></li></a>
 </ul>
 <section xmlns:th="http://www.w3.org/1999/xhtml">
+
+   <center> <form th:action="@{/index}" method="POST" style="margin-left: 10%;">
+        <label for="title">Search</label>
+        <input type="text" id="title" name="title" placeholder="title"/>
+        <input type="text" id="tags" name="tags" placeholder="tags"/>
+        <input type="text" id="genre" name="genre" placeholder="genre"/>
+        <input type="text" id="description" name="description" placeholder="description"/>
+        <button class="button" type="submit">Search</button>
+    </form>
     <div class="container" th:each="book : ${books}">
-        <div class="row">
             <a th:href="${'/view/' + book.id}"><div class="col-md-auto">
                 <img th:src = "${book.image}" class = "bookImage">
                 <p th:text="${book.name}"></p>
             </div></a>
         </div>
-    </div>
+   </center></section>
 </section>

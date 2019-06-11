@@ -5,6 +5,8 @@
         <form th:action="@{/edit/{id}(id=${book.id})}" method="POST">
             <input type="text" id="name" th:value="${book.name}" name="name" required/>
             <input type="text" id = "description" th:value="${book.description}" name = "description" required/>
+            <input type="text" id="genre" name="genre" th:value="${book.genre}"required/>
+            <input type="text" id = "tags" name = "tags" th:value="${book.tags}" required/>
             <button class="button" type="submit">Edit</button>
             <button class="cancel button" type="button" onclick="location.href='/'">Cancel</button>
         </form>

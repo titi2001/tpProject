@@ -1,6 +1,7 @@
 package elsys.bookwebsite.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -10,6 +11,8 @@ public class Book {
     private String description;
     private String f;
     private String name;
+    private String genre;
+    private String tags;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,5 +53,21 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

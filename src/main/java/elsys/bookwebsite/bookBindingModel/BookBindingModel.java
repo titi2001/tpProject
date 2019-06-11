@@ -7,6 +7,8 @@ public class BookBindingModel {
     private String f;
     private String description;
     private String name;
+    private String genre;
+    private String tags;
     public int getId() {
         return id;
     }
@@ -44,5 +46,21 @@ public class BookBindingModel {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }
